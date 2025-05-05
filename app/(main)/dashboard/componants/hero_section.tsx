@@ -1,8 +1,9 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Define your carousel slides data
 const slides = [
   {
     id: 1,
@@ -59,22 +60,17 @@ const HeroSectionCarousel = () => {
             ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
           style={{ backgroundImage: `url('${slide.image}')` }}
         >
-          {/* Overlay for better text readability */}
           <div className="absolute inset-0 bg-black opacity-50"></div>
 
-          {/* Content container for each slide */}
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-6">
-            {/* Slide Heading */}
             <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in-up">
               {slide.heading}
             </h1>
 
-            {/* Slide Subheading */}
             <p className="text-lg md:text-xl mb-8 animate-fade-in-up animation-delay-200">
               {slide.subheading}
             </p>
 
-            {/* Call to Action Button for the slide */}
             <Button
               size="lg"
               className="text-lg px-8 py-3 animate-fade-in-up animation-delay-400"

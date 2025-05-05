@@ -5,8 +5,12 @@ export default function MainLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main>
-    <TopBar />
-    {children}
-    </main>;
+  return (
+    <main className="min-h-screen flex flex-col">
+      <TopBar />
+      <div className="flex-1 w-full">
+        {children}
+      </div>
+    </main>
+  );
 }
