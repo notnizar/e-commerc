@@ -1,11 +1,10 @@
 'use client';
 
-
 import { Package2, Search, ShoppingCart, CircleUser } from 'lucide-react';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-
+import ROUTES from '@/lib/routes';
 
 export default function TopBar() {
   return (
@@ -37,11 +36,11 @@ export default function TopBar() {
                 <Package2 className="h-6 w-6" />
                 <span className="sr-only">Your Store</span>
               </a>
-              <a href="#" className="hover:text-foreground">
+              <a href={ROUTES.Protected.HOME} className="hover:text-foreground">
                 Home
               </a>
               <a
-                href="#"
+                href={ROUTES.Protected.shop}
                 className="text-muted-foreground hover:text-foreground"
               >
                 Shop
@@ -78,11 +77,11 @@ export default function TopBar() {
             <Package2 className="h-6 w-6" />
             <span className="sr-only">Your Store</span>
           </a>
-          <a href="#" className="text-foreground transition-colors hover:text-foreground">
+          <a href={ROUTES.Protected.dashboard} className="text-foreground transition-colors hover:text-foreground">
             Home
           </a>
           <a
-            href="#"
+            href={ROUTES.Protected.shop}
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Shop

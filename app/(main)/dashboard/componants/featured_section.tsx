@@ -1,25 +1,30 @@
 import React from 'react'; // Import React
-import ProductSection from '@/components/cards/product_section';
+import { ProductCard } from "@/components/cards/product_card";
+import { Product } from "@/lib/services/products";
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  description?: string;
-  isNew?: boolean;
+interface FeaturedProductsSectionProps {
+  products: Product[];
 }
 
-const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }) => {
-  return (
-    <ProductSection
-      products={products}
-      title="Featured Products"
-      subtitle="Our curated selection of must-have items"
-      seeAllLink="/shop"
-      theme="default"
-    />
-  );
-};
+export default function FeaturedProductsSection({ products }: FeaturedProductsSectionProps) {
+  if (!products || products.length === 0) {
+    return null;
+  }
 
-export default FeaturedProductsSection;
+  return (
+    <section className="py-16 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
+          <p className="text-muted-foreground">Discover our handpicked selection of premium items</p>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

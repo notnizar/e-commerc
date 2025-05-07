@@ -4,24 +4,14 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  description?: string;
-  isNew?: boolean;
-}
+import { Product } from '@/lib/services/products';
 
 interface NewArrivalsSectionProps {
   products: Product[];
 }
 
 export default function NewArrivalsSection({ products }: NewArrivalsSectionProps) {
-  const newArrivals = products.filter(product => product.isNew);
-
-  if (newArrivals.length === 0) {
+  if (!products || products.length === 0) {
     return null;
   }
 
@@ -35,7 +25,7 @@ export default function NewArrivalsSection({ products }: NewArrivalsSectionProps
         </div>
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.1),transparent)]"></div>
       </div>
-      
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4">
         <div className="text-center mb-12">
@@ -51,21 +41,21 @@ export default function NewArrivalsSection({ products }: NewArrivalsSectionProps
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {newArrivals.map((product, index) => (
+          {products.map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 
                 duration: 0.5,
-                delay: index * 0.1 // Stagger the animations
+                delay: index * 0.1
               }}
               viewport={{ once: true }}
             >
               <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl group">
                 <div className="relative aspect-[4/5]">
                   <Image
-                    src={product.imageUrl}
+                    src={product.image_url}
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

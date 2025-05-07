@@ -18,6 +18,7 @@ const ROUTES = {
     Protected: {
       HOME: '/',
       dashboard:'/dashboard',
+      shop: '/shop'
     }
 
 }as const

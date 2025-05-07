@@ -1,47 +1,37 @@
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Heart } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Heart, ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import { Product } from "@/lib/services/products";
 
 interface ProductCardProps {
-  title: string;
-  price: number;
-  imageUrl: string;
-  discount?: number;
-  rating?: number;
-  isNew?: boolean;
+  product: Product;
 }
 
-export function ProductCard({ title, price, imageUrl, discount, isNew }: ProductCardProps) {
-  const discountedPrice = discount ? price - (price * discount) / 100 : price;
+export function ProductCard({ product }: ProductCardProps) {
+  if (!product) {
+    return null;
+  }
+
+  const fallbackImage = "https://placehold.co/300x375/f0abfc/0c0a09?text=Product";
 
   return (
-    <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-primary/50 transition-all duration-300">
-      <CardContent className="p-0 relative aspect-square">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+    <Card className="group overflow-hidden">
+      <CardContent className="p-0 relative aspect-[4/5]">
+        <Image
+          src={product.image_url || fallbackImage}
+          alt={product.name || 'Product'}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = fallbackImage;
+          }}
         />
-        {(discount || isNew) && (
-          <div className="absolute top-2 left-2 flex flex-col gap-2">
-            {discount && (
-              <Badge variant="destructive" className="text-xs">
-                -{discount}%
-              </Badge>
-            )}
-            {isNew && (
-              <Badge variant="default" className="bg-green-600 text-xs">
-                New
-              </Badge>
-            )}
-          </div>
-        )}
         <Button
+          variant="ghost"
           size="icon"
-          variant="secondary"
           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Heart className="h-4 w-4" />
@@ -49,14 +39,11 @@ export function ProductCard({ title, price, imageUrl, discount, isNew }: Product
       </CardContent>
       
       <CardHeader className="p-3 space-y-1.5">
-        <h3 className="font-medium text-sm line-clamp-1">{title}</h3>
+        <h3 className="font-medium text-sm line-clamp-1">{product.name || 'Untitled Product'}</h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-base font-semibold">${discountedPrice.toFixed(2)}</span>
-          {discount && (
-            <span className="text-sm text-muted-foreground line-through">
-              ${price.toFixed(2)}
-            </span>
-          )}
+          <span className="text-base font-semibold">
+            ${(product.price || 0).toFixed(2)}
+          </span>
         </div>
       </CardHeader>
 
